@@ -7,7 +7,10 @@
 #   copyright and license terms.
 #
 ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ##
+def collect_data(game){
+    if(game=='League of Legends'):
+        
+    elif (game=='DOTA2'):
+    elif(game=='Overwatch'):
 
-def load_characters( game):
-  characters = []
-  return characters
+}
