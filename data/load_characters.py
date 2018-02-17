@@ -7,6 +7,10 @@
 #   copyright and license terms.
 #
 ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ##
+from pymongo import MongoClient
+client = MongoClient('mongodb://localhost:27017/')
+
+
 
 def load_characters(game):
   characters = []
