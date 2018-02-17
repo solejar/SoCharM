@@ -12,6 +12,7 @@ import json
 from pymongo import MongoClient
 import argparse
 import sys
+import preprocess_data as prep
 
 client = MongoClient('mongodb://localhost:27017')
 
@@ -30,13 +31,14 @@ def collect_data(game):
         db = client.league_of_legends
 
         league_url = 'https://na1.api.riotgames.com/lol/static-data/v3/champions?locale=en_US&champListData=all&tags=all&dataById=false'
-        headers = {"X-Riot-Token": "RGAPI-290454e6-05e1-4d05-a5b5-99e5b02dbc29"}
+        headers = {"X-Riot-Token": "RGAPI-fe756ea4-3914-44b1-a171-a0fd1851098f"}
         try:
             response = requests.get(league_url,headers=headers)
         except requests.ConnectionError:
             print 'uh oh something went wrong with the api'
         else:
             data = response.json()
+            print data
             champion_data = data['data']
 
             for champion, data in champion_data.iteritems():
@@ -44,6 +46,15 @@ def collect_data(game):
                 post_id = db.champion_data.insert_one(data).inserted_id
                 if(post_id):
                     print 'Added champion {0}'.format(champion)
+
+                flattened_champ = prep.flatten_data(game,data)
+
+                post_id =db.champion_data_flattened.insert_one(flattened_champ).inserted_id
+                if(post_id):
+                    print 'successfully flattened champion {0}'.format(flattened_champ['name'])
+
+
+
 
 
     elif (game=='DOTA2'):

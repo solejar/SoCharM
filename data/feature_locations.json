@@ -1,0 +1,89 @@
+{
+  "league": {
+
+      "stats": [
+        {
+            "feature": "difficulty",
+            "location": "info.difficulty"
+        },
+        {
+          "feature": "armorperlevel",
+          "location": "stats.armorperlevel"
+        },
+        {
+          "feature": "armor",
+          "location": "stats.armor"
+        },
+        {
+          "feature": "hpregenperlevel",
+          "location": "stats.hpregenperlevel"
+        },
+        {
+          "feature": "hpregen",
+          "location": "stats.hpregen"
+        },
+        {
+          "feature": "attackspeedperlevel",
+          "location": "stats.attackspeedperlevel"
+        },
+        
+        {
+          "feature": "attackdamageperlevel",
+          "location": "stats.attackdamageperlevel"
+        },
+        {
+          "feature": "attackdamage",
+          "location": "stats.attackdamage"
+        },
+        {
+          "feature": "mpregenperlevel",
+          "location": "stats.mpregenperlevel"
+        },
+        {
+          "feature": "mpregen",
+          "location": "stats.mpregen"
+        },
+        {
+          "feature": "critperlevel",
+          "location": "stats.critperlevel"
+        },
+        {
+          "feature": "mrperlevel",
+          "location": "stats.spellblockperlevel"
+        },
+        {
+          "feature": "mr",
+          "location": "stats.spellblock"
+        },
+        {
+          "feature": "hpperlevel",
+          "location": "stats.hpperlevel"
+        },
+        {
+          "feature": "hp",
+          "location": "stats.hp"
+        },
+        {
+          "feature": "attackspeedoffset",
+          "location": "stats.attackspeedoffset"
+        },
+        {
+          "feature": "attackrange",
+          "location": "stats.attackrange"
+        },
+        {
+          "feature": "movespeed",
+          "location": "stats.movespeed"
+        }
+      ],
+      "bonuses": [
+
+      ]
+  },
+  "overwatch": {
+
+  },
+  "dota2": {
+
+  }
+}
