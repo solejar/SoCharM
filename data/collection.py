@@ -18,7 +18,7 @@ client = MongoClient('mongodb://localhost:27017')
 
 parser = argparse.ArgumentParser(description='This is the script which handles data collection for the app. Takes --game inputs')
 
-parser.add_argument('--game',dest='game',required=True)
+parser.add_argument('--game',dest='game',default='league')
 
 del sys.argv[0]
 
@@ -28,7 +28,7 @@ game = args_dict['game']
 def collect_data(game):
     if(game=='league'):
         print 'game is League of Legends'
-        db = client.league_of_legends
+        db = client.league
 
         league_url = 'https://na1.api.riotgames.com/lol/static-data/v3/champions?locale=en_US&champListData=all&tags=all&dataById=false'
         headers = {"X-Riot-Token": "RGAPI-fe756ea4-3914-44b1-a171-a0fd1851098f"}
@@ -38,7 +38,7 @@ def collect_data(game):
             print 'uh oh something went wrong with the api'
         else:
             data = response.json()
-            print data
+            #print data
             champion_data = data['data']
 
             for champion, data in champion_data.iteritems():
@@ -52,7 +52,6 @@ def collect_data(game):
                 post_id =db.champion_data_flattened.insert_one(flattened_champ).inserted_id
                 if(post_id):
                     print 'successfully flattened champion {0}'.format(flattened_champ['name'])
-
 
 
 

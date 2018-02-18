@@ -12,7 +12,7 @@ def flatten_data(game,data):
 
         #print 'game is league'
 
-        db = client.league_of_legends
+        db = client.league
 
         feature_locations = location_dict[game]
         feature_list = feature_locations['stats']#gotta get this from mongo
@@ -36,7 +36,7 @@ def flatten_data(game,data):
 
             feature_val = working_data[location_nest[depth-1]]
 
-            flattened_champ[feature_name] = feature_val
+            feature_dict[feature_name] = feature_val
 
         flattened_champ['features'] = feature_dict
 
