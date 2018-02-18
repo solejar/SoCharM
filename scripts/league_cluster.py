@@ -29,6 +29,8 @@ from mvpa2.suite import *
 import argparse
 import sys
 
+#from operator import itemgetter, attrgetter, methodcaller
+
 import matplotlib.pyplot as plt
 
 from pymongo import MongoClient
@@ -41,12 +43,14 @@ parser = argparse.ArgumentParser(description='This is the script which handles d
 
 parser.add_argument('--game',dest='game',default='league')
 parser.add_argument('--kernel',dest='kernel',default='all')
+parser.add_argument('--save',dest='save',default=False,type=bool)
 
 #del sys.argv[0]
 
 args_dict = vars(parser.parse_args(sys.argv[1:]))
 game = args_dict['game']
 kernel = args_dict['kernel']
+save = args_dict['save']
 
 kernel_map = {
     'league': {
@@ -169,15 +173,69 @@ the training data to the mapper and plot the output.
 
 mapped = som(character_set)
 
-pl.title('League SOM')
+
 # SOM's kshape is (rows x columns), while matplotlib wants (X x Y)
+
+xs = np.array([])
+ys = np.array([])
+
+
+
+named_results = []
 for i, m in enumerate(mapped):
+    result = {}
     #print i
-    #print 'x,y: {0}'
-    pl.text(m[1], m[0], character_names[i], ha='center', va='center',
-           bbox=dict(facecolor='white', alpha=0.5, lw=0))
+    #print 'x,y: ({0},{1}), champion: {2}'.format(m[1],m[0],character_names[i])
+    result['location'] = m.tolist()
+    result['name'] = character_names[i]
+    named_results.append(result)
+    #pl.text(m[1], m[0], character_names[i], ha='center', va='center',
+    #       bbox=dict(facecolor='white', alpha=0.5, lw=0))
+    xs = np.append(xs, m[1])
+    ys = np.append(ys,m[0])
+
+sorted_map = sorted(named_results, key=lambda x: (x['location'][0],x['location'][1]))
+#print sorted_map
+
+db = client.league
+
+old_cluster_key = sorted_map[0]['location']
+curr_cluster_vals = []
+if save:
+    for result in sorted_map:
+
+        curr_cluster_key = result['location']
+        if(old_cluster_key!=curr_cluster_key):
+            cluster = {
+                'name' : '',
+                'champions': curr_cluster_vals
+            }
+
+            post_id = db.results.insert_one(cluster).inserted_id
+            if(not post_id):
+                'something went wrong with result posting'
+            curr_cluster_vals = []
+        old_cluster_key = curr_cluster_key
+        curr_cluster_vals.append(result)
+        print result
+    cluster = {
+        'name': '',
+        'champions': curr_cluster_vals
+    }
+
+    post_id=db.results.insert_one(cluster).inserted_id
+    if(not post_id):
+        'something went wrong with the insertion of a result'
+
+pl.scatter(xs,ys)
+
+
+
+
+pl.title('League SOM')
 
 """
+
 The text labels of the original training colors will appear at the 'mapped'
 locations in the SOM -- and should match with the underlying color.
 """
