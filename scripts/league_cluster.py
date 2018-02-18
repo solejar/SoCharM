@@ -189,10 +189,12 @@ for i, m in enumerate(mapped):
     result['location'] = m.tolist()
     result['name'] = character_names[i]
     named_results.append(result)
-    #pl.text(m[1], m[0], character_names[i], ha='center', va='center',
-    #       bbox=dict(facecolor='white', alpha=0.5, lw=0))
-    xs = np.append(xs, m[1])
-    ys = np.append(ys,m[0])
+    rand_xpos = m[1]+0.2*(np.random.rand()-0.5)
+    rand_ypos = m[0]+0.2*(np.random.rand()-0.5)
+    pl.text(rand_xpos, rand_ypos, character_names[i], ha='center', va='center',
+           bbox=dict(facecolor='white', alpha=0.5, lw=0))
+    xs = np.append(xs, rand_xpos)
+    ys = np.append(ys,rand_ypos)#added with jiggle
 
 sorted_map = sorted(named_results, key=lambda x: (x['location'][0],x['location'][1]))
 #print sorted_map
