@@ -147,7 +147,7 @@ iterations and to use custom learning rate.
 """
 
 #figure out what parameters need to be tweaked
-som = SimpleSOMMapper((5, 10), 400, learning_rate=0.05)
+som = SimpleSOMMapper((10, 20), 400, learning_rate=0.05)
 
 """
 Finally, we train the mapper with the previously defined 'color' dataset.
@@ -189,8 +189,8 @@ for i, m in enumerate(mapped):
     result['location'] = m.tolist()
     result['name'] = character_names[i]
     named_results.append(result)
-    rand_xpos = m[1]+0.2*(np.random.rand()-0.5)
-    rand_ypos = m[0]+0.2*(np.random.rand()-0.5)
+    rand_xpos = m[1]+0.25*(np.random.rand()-0.5)
+    rand_ypos = m[0]+0.25*(np.random.rand()-0.5)
     pl.text(rand_xpos, rand_ypos, character_names[i], ha='center', va='center',
            bbox=dict(facecolor='white', alpha=0.5, lw=0))
     xs = np.append(xs, rand_xpos)

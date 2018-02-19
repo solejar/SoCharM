@@ -1,0 +1,6 @@
+Add abilities into schema for features,
+  learn how to categorize categorical data
+
+add the abilities/stats kernel layer, determining appropriate mappings
+
+test out some different grid sizes
