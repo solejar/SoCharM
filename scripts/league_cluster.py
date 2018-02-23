@@ -173,13 +173,10 @@ the training data to the mapper and plot the output.
 
 mapped = som(character_set)
 
-
 # SOM's kshape is (rows x columns), while matplotlib wants (X x Y)
 
 xs = np.array([])
 ys = np.array([])
-
-
 
 named_results = []
 for i, m in enumerate(mapped):
@@ -230,9 +227,6 @@ if save:
         'something went wrong with the insertion of a result'
 
 pl.scatter(xs,ys)
-
-
-
 
 pl.title('League SOM')
 

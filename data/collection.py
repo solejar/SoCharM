@@ -19,11 +19,11 @@ client = MongoClient('mongodb://localhost:27017')
 parser = argparse.ArgumentParser(description='This is the script which handles data collection for the app. Takes --game inputs')
 
 parser.add_argument('--game',dest='game',default='league')
+parser.add_argument('--save',dest='save',default=False)
 
-del sys.argv[0]
-
-args_dict = vars(parser.parse_args(sys.argv))
+args_dict = vars(parser.parse_args(sys.argv[1:]))
 game = args_dict['game']
+save = args_dict['save']
 
 def collect_data(game):
     if(game=='league'):
@@ -56,13 +56,13 @@ def collect_data(game):
 
 
 
-    elif (game=='DOTA2'):
+    elif (game=='dota2'):
         db = client.dota2
         print 'game is DOTA'
-    elif(game=='Overwatch'):
+    elif(game=='overwatch'):
         db = client.overwatch
 
-        print 'game is Overwatch'
+        print 'game is overwatch'
 
         for heroID in range(1,25): #this is the amount of heros that api supports
             overwatch_url = 'https://overwatch-api.net/api/v1/hero/{0}'.format(heroID)
@@ -72,10 +72,23 @@ def collect_data(game):
                 print 'uh oh something went wrong with request for hero: {0}'.format(heroID)
             else:
                 data = response.json()
-                post_id = db.hero_data.insert_one(data).inserted_id
 
-                if(post_id):
-                    print 'Added hero {0}'.format(data.name)
+                flattened_hero= prep.flatten_data(game,data)
+                if save:
+                    post_id = db.hero_data.insert_one(data).inserted_id
+
+                    if(post_id):
+                        print 'added hero data'
+                        #print 'Added hero {0}'.format(data['name'].decode('utf-8').encode('ascii','ignore'))
+
+                    post_id = db.hero_data_flattened.insert_one(flattened_hero).inserted_id
+
+                    if(post_id):
+                        print flattened_hero.keys()
+                        print "successfully flattened hero"
+                        #print 'successfully flattened champion {0}'.format(flattened_hero['name'].decode('utf-8').encode('ascii','ignore'))
+
+
 
 
 

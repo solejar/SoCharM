@@ -26,7 +26,7 @@
           "feature": "attackspeedperlevel",
           "location": "stats.attackspeedperlevel"
         },
-        
+
         {
           "feature": "attackdamageperlevel",
           "location": "stats.attackdamageperlevel"
@@ -81,7 +81,22 @@
       ]
   },
   "overwatch": {
+    "stats": [
 
+    ],
+    "abilities": [
+      {
+        "feature": "basicability"
+        }"basic": [
+
+      ],
+      "ultimate": {
+
+      },
+      "passive": {
+
+      }
+    ]
   },
   "dota2": {
 
